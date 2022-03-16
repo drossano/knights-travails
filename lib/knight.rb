@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 require_relative 'possible_moves'
 require_relative 'board'
+# Handles moving knight
 class Knight
   def initialize
     @board = Board.new
@@ -12,8 +15,8 @@ class Knight
       moves_from_space = [get_up_left(space), get_up_right(space), get_right_up(space), get_right_down(space), get_down_right(space), get_down_left(space), get_left_down(space), get_left_up(space)]
       @possible_moves.push(moves_from_space)
     end
-    @possible_moves.map!{ |array| array.compact.sort}
-   @possible_moves
+    @possible_moves.map! { |array| array.compact.sort }
+    @possible_moves
   end
 
   def move_knight(starting_space, destination_space)
@@ -30,7 +33,7 @@ class Knight
     end
     travails.reverse!
     puts "You made it in #{travails.length - 1} moves! Here's your path:"
-    travails.each { |travail| p travail}
+    travails.each { |travail| p travail }
   end
 
   def search_moves(current_space)
@@ -40,15 +43,11 @@ class Knight
     queue.push(current_space)
     until queue.empty?
       queue.each do |move|
-        unless results.any? { |result| result[:space] == move}
-          results.push(Hash[space: move, predecesor: predecessor])
-        end
+        results.push(Hash[space: move, predecesor: predecessor]) unless results.any? { |result| result[:space] == move }
       end
       predecessor = queue[0]
       @possible_moves[@board.spaces.index(queue[0])].each do |move|
-        unless results.any? { |result| result[:space] == @board.spaces[move]}
-          queue.push(@board.spaces[move])
-        end
+        queue.push(@board.spaces[move]) unless results.any? { |result| result[:space] == @board.spaces[move] }
       end
       queue.shift
     end
