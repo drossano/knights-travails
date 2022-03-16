@@ -1,8 +1,7 @@
 require_relative 'possible_moves'
 require_relative 'board'
 class Knight
-  def initialize(starting_space)
-    @starting_space = starting_space
+  def initialize
     @board = Board.new
     @possible_moves = []
     get_moves(@board.spaces)
@@ -15,6 +14,23 @@ class Knight
     end
     @possible_moves.map!{ |array| array.compact.sort}
    @possible_moves
+  end
+
+  def move_knight(starting_space, destination_space)
+    paths = search_moves(starting_space)
+    travails = []
+    travails.push(destination_space)
+    until starting_space == destination_space
+      paths.each do |path|
+        if path[:space] == destination_space
+          travails.push(path[:predecesor])
+          destination_space = path[:predecesor]
+        end
+      end
+    end
+    travails.reverse!
+    puts "You made it in #{travails.length - 1} moves! Here's your path:"
+    travails.each { |travail| p travail}
   end
 
   def search_moves(current_space)
@@ -38,8 +54,7 @@ class Knight
       end
       queue.shift
     end
-    results.sort_by!{ |h| h[:distance] }
-    puts results
+    results
   end
 
   def get_up_left(space)
