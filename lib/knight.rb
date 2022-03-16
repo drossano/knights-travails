@@ -36,17 +36,15 @@ class Knight
   def search_moves(current_space)
     queue = []
     results = []
-    distance = 0
     predecessor = nil
     queue.push(current_space)
     until queue.empty?
       queue.each do |move|
         unless results.any? { |result| result[:space] == move}
-          results.push(Hash[space: move, distance: distance, predecesor: predecessor])
+          results.push(Hash[space: move, predecesor: predecessor])
         end
       end
       predecessor = queue[0]
-      distance += 1
       @possible_moves[@board.spaces.index(queue[0])].each do |move|
         unless results.any? { |result| result[:space] == @board.spaces[move]}
           queue.push(@board.spaces[move])
