@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'possible_moves'
 require_relative 'board'
 # Handles moving knight
 class Knight
@@ -20,7 +19,7 @@ class Knight
   end
 
   def move_knight(starting_space, destination_space)
-    paths = search_moves(starting_space)
+    paths = search_moves(starting_space, destination_space)
     travails = []
     travails.push(destination_space)
     until starting_space == destination_space
@@ -36,7 +35,7 @@ class Knight
     travails.each { |travail| p travail }
   end
 
-  def search_moves(current_space)
+  def search_moves(current_space, destination_space)
     queue = []
     results = []
     predecessor = nil
@@ -49,7 +48,7 @@ class Knight
       @possible_moves[@board.spaces.index(queue[0])].each do |move|
         queue.push(@board.spaces[move]) unless results.any? { |result| result[:space] == @board.spaces[move] }
       end
-      queue.shift
+      break if queue.shift == destination_space
     end
     results
   end
