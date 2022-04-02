@@ -9,4 +9,8 @@ class Board
     @spaces.push([0, 0], [1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 7])
     @spaces.sort!
   end
+
+  def find_space(coordinate)
+    @spaces.index(coordinate)
+  end
 end

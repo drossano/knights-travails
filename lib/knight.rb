@@ -45,7 +45,7 @@ class Knight
         results.push(Hash[space: move, predecesor: predecessor]) unless results.any? { |result| result[:space] == move }
       end
       predecessor = queue[0]
-      @possible_moves[@board.spaces.index(queue[0])].each do |move|
+      @possible_moves[@board.find_space(queue[0])].each do |move|
         queue.push(@board.spaces[move]) unless results.any? { |result| result[:space] == @board.spaces[move] }
       end
       break if queue.shift == destination_space
@@ -54,34 +54,34 @@ class Knight
   end
 
   def get_up_left(space)
-    @board.spaces.index([space[0] - 1, space[1] + 2])
+    @board.find_space([space[0] - 1, space[1] + 2])
   end
 
   def get_up_right(space)
-    @board.spaces.index([space[0] + 1, space[1] + 2])
+    @board.find_space([space[0] + 1, space[1] + 2])
   end
 
   def get_right_up(space)
-    @board.spaces.index([space[0] + 2, space[1] + 1])
+    @board.find_space([space[0] + 2, space[1] + 1])
   end
 
   def get_right_down(space)
-    @board.spaces.index([space[0] + 2, space[1] - 1])
+    @board.find_space([space[0] + 2, space[1] - 1])
   end
 
   def get_down_right(space)
-    @board.spaces.index([space[0] + 1, space[1] - 2])
+    @board.find_space([space[0] + 1, space[1] - 2])
   end
 
   def get_down_left(space)
-    @board.spaces.index([space[0] - 1, space[1] - 2])
+    @board.find_space([space[0] - 1, space[1] - 2])
   end
 
   def get_left_down(space)
-    @board.spaces.index([space[0] - 2, space[1] - 1])
+    @board.find_space([space[0] - 2, space[1] - 1])
   end
 
   def get_left_up(space)
-    @board.spaces.index([space[0] - 2, space[1] + 1])
+    @board.find_space([space[0] - 2, space[1] + 1])
   end
 end
